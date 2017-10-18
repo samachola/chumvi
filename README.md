@@ -12,6 +12,12 @@ Form Validation, Backend Integration.
 Add Recipe btn.
 Database Integration
 
+run git clone https://github.com/samachola/chumvi.git or download zip file
+create a virtualenv test_env
+run pip install -r requirements.txt
+run `python app.py` in your terminal to view app.
+
+
 
 
 View demo here 
