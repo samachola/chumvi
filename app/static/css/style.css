@@ -123,7 +123,8 @@ header {
 }
 
 .login form .inputwrapper input[type="text"],
-.login form .inputwrapper input[type="password"] {
+.login form .inputwrapper input[type="password"],
+.login form .inputwrapper input[type="email"] {
     width: 100%;
     height: 2em;
     padding: .5em;

@@ -1,13 +1,14 @@
-from flask import render_template
-
+from flask import render_template, redirect, url_for, request, session, flash
 from app import app
 
 @app.route('/')
 def index():
     return render_template("index.html")
 
-@app.route('/login')
-def about():
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.methods == 'POST':
+        
     return render_template("login.html")
 
 @app.route('/register')
