@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu+Condensed');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu');
+body {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background: #FFF;
+    font-family: 'Ubuntu Condensed', sans-serif;
+}
+
+header {
+    background: #E8CE4D;
+    width: 100%;
+    margin: 0 auto;
+    padding-top: 2em;
+    padding-bottom: 5em;
+    display: grid;
+    grid-template-columns: auto 80% auto;
+}
+
+.logo {
+    font-family: 'Ubuntu', serif;
+    color: rgb(64, 89, 107);
+    font-size: 4em;
+    font-weight: 800;
+    letter-spacing: 0em;
+    text-align: center;
+}
+
+.signup {
+    padding-top: 2em;
+}
+
+.signup a {
+    text-decoration: none;
+    color: #e8ce4d;
+    font-family: 'Ubuntu', monospace;
+    border: 1px solid #40596b;
+    padding: .5em 2em;
+    border-radius: .5em;
+    background: #40596b;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-top: -2em;
+}
+
+.container .recipe {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin: 1em .8em;
+    background: #FFF;
+    box-shadow: 0 4px 10px -2px rgba(64, 89, 107, .6);
+}
+
+.container .recipe .image {
+    max-width: 15em;
+    width: 15em;
+    overflow: hidden;
+    background: #f5f5f5;
+}
+
+.container .recipe .image img {
+    width: 100%;
+}
+
+.container .recipe .info {
+    padding-left: 1em;
+    color: rgb(64, 89, 107);
+}
+
+.container .recipe .info .title {
+    color: rgb(64, 89, 107);
+    font-weight: 400;
+    font-size: 1.2em;
+    text-transform: capitalize;
+    padding-top: 1em;
+}
+
+.container .recipe .info .desc {
+    text-align: justify;
+    font-size: .8em;
+    padding-right: 1.5em;
+}
+
+.container .recipe .meta {
+    display: grid;
+    grid-template-columns: 60% auto;
+}
+
+.container .recipe .meta h3 {
+    font-size: 1em;
+    text-transform: capitalize;
+}
+
+.container .recipe .meta ul li {
+    display: inline;
+    list-style: none;
+    font-size: .7em;
+    color: #E8CE4D;
+    text-transform: lowercase;
+}
+
+.login {
+    width: 100%;
+    background: #E8CE4D;
+    height: 75vh;
+}
+
+.login form {
+    width: 35%;
+    margin: 0 auto;
+    padding-top: 2em;
+}
+
+.login form .inputwrapper {
+    width: 100%;
+    margin: 1em auto;
+}
+
+.login form .inputwrapper input[type="text"],
+.login form .inputwrapper input[type="password"] {
+    width: 100%;
+    height: 2em;
+    padding: .5em;
+    background: #d4bc44;
+    border: 2px solid #40596b;
+    color: #FFF;
+    font-family: 'Ubuntu Condensed', sans-serif;
+}
+
+.login form .submit {
+    display: grid;
+    grid-template-columns: auto 70%;
+}
+
+.login form .submit a.btn-login {
+    background: #40596b;
+    text-align: center;
+    font-family: 'Ubuntu Condensed', sans-serif;
+    color: #E8CE4D;
+    border: none;
+    font-size: 1.2em;
+    padding: .5em;
+    text-decoration: none;
+}
+
+.login form .submit a {
+    color: #40596b;
+    text-align: right;
+    text-decoration: none;
+    padding-top: 1em;
+}

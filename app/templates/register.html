@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block title %} Signup {% endblock %} {% block body %}
+
+<div class="login">
+    <form>
+        <div class="inputwrapper">
+            <input type="text" name="name" value="First Name">
+        </div>
+
+        <div class="inputwrapper">
+            <input type="text" name="name" value="Last Name">
+        </div>
+        <div class="inputwrapper">
+            <input type="text" name="name" value="Enter Email">
+        </div>
+        <div class="inputwrapper">
+            <input type="password" name="name" value="Enter Password">
+        </div>
+        <div class="submit">
+            <a href="/" class="btn-login">Register</a>
+            <a href="/login">Or Login..?</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
