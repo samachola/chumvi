@@ -7,8 +7,11 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.methods == 'POST':
-        
+    if request.method == 'POST':
+        if request.form['username'] :
+            session['logged_in'] = True
+            flash('Logged in successfully')
+            return redirect(url_for('index'))
     return render_template("login.html")
 
 @app.route('/register')

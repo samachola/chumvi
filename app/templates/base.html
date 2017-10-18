@@ -15,7 +15,12 @@
     <header>
         <div class="menu"></div>
         <div class="logo">chumvi</div>
-        <div class="signup"> <a href="/login">Login/Signup</a></div>
+        <div class="signup">
+            {% if not session.logged_in %}
+            <a href="{{url_for('login')}}">Login/Signup</a> {% else %}
+            <a href="{{url_for('login')}}">Logout</a> {% endif %}
+
+        </div>
     </header>
 
     {% block body %} {% endblock %}

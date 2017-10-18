@@ -139,7 +139,8 @@ header {
     grid-template-columns: auto 70%;
 }
 
-.login form .submit a.btn-login {
+.login form .submit button.btn-login,
+.login form .submit button[type="submit"] {
     background: #40596b;
     text-align: center;
     font-family: 'Ubuntu Condensed', sans-serif;
@@ -147,7 +148,7 @@ header {
     border: none;
     font-size: 1.2em;
     padding: .5em;
-    text-decoration: none;
+    border: 1px solid #40596b;
 }
 
 .login form .submit a {
