@@ -12,9 +12,6 @@ install:
 script:
 - ./test.sh   # run the test scripts
 
-ignore:
-- *.md
-
 # whitelist   # this are branches to build from
 branches:
 only:
