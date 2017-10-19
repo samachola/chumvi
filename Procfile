@@ -1,0 +1,1 @@
+web: gunicorn chumvi.wsgi --log-file -
