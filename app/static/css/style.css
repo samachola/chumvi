@@ -109,6 +109,15 @@ header {
     width: 100%;
     background: #E8CE4D;
     height: 75vh;
+    margin-top: -2em;
+}
+
+.login p {
+    font-style: italic;
+    font-family: 'Ubuntu Condensed', san-serif;
+    color: #40596b;
+    text-align: center;
+    font-size: .8em;
 }
 
 .login form {
