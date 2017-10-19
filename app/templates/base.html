@@ -13,7 +13,10 @@
 <body>
 
     <header>
-        <div class="menu"></div>
+        <div class="menu">
+            {% if session.show %} {% if session.logged_in %}
+            <a href="{{url_for('recipe')}}">ADD RECIPE</a> {% endif %}{% endif %}
+        </div>
         <div class="logo">chumvi</div>
         <div class="signup">
             {% if session.show %} {% if not session.logged_in %}

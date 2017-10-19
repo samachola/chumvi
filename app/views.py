@@ -15,7 +15,7 @@ def login():
             flash('Logged in successfully')
             return redirect(url_for('index'))
     else:
-        session['logged_in'] = True
+        session['logged_in'] = False
         
     return render_template("login.html")
 
@@ -30,3 +30,10 @@ def register():
             return redirect(url_for('login'))
 
     return render_template("register.html", error = error)
+
+@app.route('/addrecipe', methods=['GET', 'POST'])
+def recipe():
+    session['show'] = True
+    if request.method == 'POST':
+        return redirect(url_for('index'))
+    return render_template("add.html")
