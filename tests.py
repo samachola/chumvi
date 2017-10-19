@@ -10,6 +10,10 @@ class FlaskTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
 
+    def test_login(self):
+        tester = app.test_client(self)
+        response = tester.get('/login', data=dict(username='admin', password='password'), follow_redirects=True)
+        self.assertIn(b'chumvi', response.data)
 
 if __name__ == '__main__':
     unittest.main()
