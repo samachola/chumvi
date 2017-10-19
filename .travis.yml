@@ -1,0 +1,39 @@
+language: python
+
+python:
+- 3.6 
+
+before_install:
+- echo "START"
+
+install:
+- pip install -r requirements.txt  
+
+script:
+- ./test.sh   # run the test scripts
+
+ignore:
+- *.md
+
+# blacklist  # here you specify branches that you want travis not to track
+branches:
+except:
+- develop
+- jikoni
+
+# whitelist   # this are branches to build from
+branches:
+only:
+- master
+
+deploy:
+  provider: heroku
+  api_key: fa46908c-d078-434e-8197-a7132f370fff
+  app:
+    master: chumvi
+
+notifications:  # specify build notifications
+email:
+- sam.achola@live.com
+on_success: change
+on_failure: always
