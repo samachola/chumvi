@@ -15,16 +15,17 @@ script:
 ignore:
 - *.md
 
+# whitelist   # this are branches to build from
+branches:
+only:
+- master
+
 # blacklist  # here you specify branches that you want travis not to track
 branches:
 except:
 - develop
 - jikoni
 
-# whitelist   # this are branches to build from
-branches:
-only:
-- master
 
 deploy:
   provider: heroku
