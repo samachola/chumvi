@@ -1,28 +1,27 @@
 language: python
 
 python:
-- 3.6 
+  - 3.6 
 
 before_install:
-- echo "START"
+  - echo "START"
 
 install:
-- pip install -r requirements.txt  
+  - pip install -r requirements.txt  
 
 script:
-- ./test.sh   # run the test scripts
+  - python tests.py
 
-# whitelist   # this are branches to build from
+# blacklist  
 branches:
-only:
-- master
+  except:
+    - develop
+    - jikoni
 
-# blacklist  # here you specify branches that you want travis not to track
+# whitelist   
 branches:
-except:
-- develop
-- jikoni
-
+  only:
+    - master
 
 deploy:
   provider: heroku
@@ -31,7 +30,7 @@ deploy:
     master: chumvi
 
 notifications:  # specify build notifications
-email:
-- sam.achola@live.com
+  email:
+    - sam.achola@live.com
 on_success: change
 on_failure: always
