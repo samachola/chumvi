@@ -1,4 +1,5 @@
-# chumvi
+# chumvi <a href="#"><img src="https://travis-ci.org/samachola/chumvi.svg?branch=master" /></a>
+
 Avast ye fellow foodies and passionate cooks. Yummy recipes provides a platform for users to keep track of their awesome recipes and share with others if they so wish.
 
 Chumvi is a Flask App that enables users to register login and upload recipes. 
