@@ -23,12 +23,5 @@ Running the app on your machine
 4.  run `python app.py` in your terminal to view app.
 
 
-<a href="https://codeclimate.com/github/codeclimate/codeclimate"><img src="https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg" /></a>
-
-<a href="https://codeclimate.com/github/codeclimate/codeclimate/coverage"><img src="https://codeclimate.com/github/codeclimate/codeclimate/badges/coverage.svg" /></a>
-
-<a href="https://codeclimate.com/github/codeclimate/codeclimate"><img src="https://codeclimate.com/github/codeclimate/codeclimate/badges/issue_count.svg" /></a>
-
-
 View demo here 
-https://samachola.github.io/yummyrecipe/
+https://chumvi.herokuapp.com/
