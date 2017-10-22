@@ -1,5 +1,8 @@
 from flask import render_template, redirect, url_for, request, session, flash
-from app import app
+from app import app, recipe
+#import Recipe
+
+Recipe = recipe.Recipe
 
 @app.route('/')
 def index():
@@ -22,18 +25,26 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     session['show'] = False
-    error = None
+    message = None
+    
     if request.method == 'POST':        
         if not request.form['fname'] or not request.form['lname'] or not request.form['email'] or not request.form['password']:
-            error = "All input fields are required"
+            message = "All input fields are required"
         else:
             return redirect(url_for('login'))
 
-    return render_template("register.html", error = error)
+    return render_template("register.html", error = message)
 
 @app.route('/addrecipe', methods=['GET', 'POST'])
 def recipe():
     session['show'] = True
     if request.method == 'POST':
-        return redirect(url_for('index'))
-    return render_template("add.html")
+        resp = Recipe.addRecipe(request.form['title'], request.form['ingredients'], request.form['process'])
+        if resp['status']:
+            return redirect(url_for('index'))
+        else:
+            return render_template("add.html", error = resp['msg'])
+
+    else:
+                   
+        return render_template("add.html")
