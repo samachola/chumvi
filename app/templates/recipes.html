@@ -4,7 +4,7 @@
 </div>
 <div class="container">
     {% for recipe in session.recipes %}
-    <div class="recipe">
+    <div class="recipe" onclick="location.href='/view/{{session.recipes.index(recipe)}}'">
         <div class="image">
             <img src="/images/images.jpg" alt="tule recipes">
         </div>

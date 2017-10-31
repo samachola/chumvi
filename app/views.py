@@ -59,20 +59,32 @@ def recipe():
         return render_template("add.html")
 
 
-@app.route('/edit', methods=['GET', 'POST'])
-def edit():
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+def edit(id):
     session['show'] = True
     if request.method == 'GET':
         return render_template("edit.html")
 
+@app.route('/view/<int:id>')
+def view(id):
+    session['show'] = True
+    # resp = Recipe.viewRecipe(id)
+    print(id)
+    return render_template("view.html")
+    
+    # if resp['status']:
+    #     print(resp['recipe'])
+    #     return render_template("view.html", recipe = resp['recipe'])
+    # else:
+    #     return redirect(url_for('recipes'))
+
+
 @app.route('/delete/<int:id>')
 def delete(id):
-    print(session['recipes'])
-    for recipe in session['recipes']:
-        if recipe == session['recipes'][id]:
-            print(recipe)
-            session['recipes'].remove(recipe)
+    resp = Recipe.deleteRecipe(id)
 
+    if resp['status']:
+        session['recipes'] = resp['recipes']
     
     return redirect(url_for('recipes'))
         
