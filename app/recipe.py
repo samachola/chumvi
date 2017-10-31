@@ -1,3 +1,4 @@
+recipes = []
 class Recipe: 
     
     def __init__(self, title, ingredients, process):
@@ -9,4 +10,12 @@ class Recipe:
         if title == '' or process == '' or ingredients == '':
             return { 'status': False, 'msg': 'cannot add empty recipe'}
         else:
-            return { 'status': True, 'msg': 'recipe successfully added'}
+            recipe = {}
+            recipe['title'] = title
+            recipe['ingredients'] = ingredients
+            recipe['process'] = process
+            recipes.append(recipe)
+
+
+
+            return { 'status': True, 'msg': 'recipe successfully added', 'recipes': recipes}

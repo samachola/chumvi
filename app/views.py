@@ -11,6 +11,7 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    session.clear()
     session['show'] = False
     if request.method == 'POST':
         if request.form['username'] :
@@ -21,6 +22,7 @@ def login():
         session['logged_in'] = False
         
     return render_template("login.html")
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -35,16 +37,43 @@ def register():
 
     return render_template("register.html", error = message)
 
+@app.route('/recipes')
+def recipes():
+    session['show'] = True
+
+    return render_template("recipes.html")
+
 @app.route('/addrecipe', methods=['GET', 'POST'])
 def recipe():
     session['show'] = True
     if request.method == 'POST':
         resp = Recipe.addRecipe(request.form['title'], request.form['ingredients'], request.form['process'])
         if resp['status']:
-            return redirect(url_for('index'))
+            print(resp['recipes'])
+            session['recipes'] = resp['recipes']
+            return redirect(url_for('recipes'))
         else:
             return render_template("add.html", error = resp['msg'])
 
-    else:
-                   
+    else:                   
         return render_template("add.html")
+
+
+@app.route('/edit', methods=['GET', 'POST'])
+def edit():
+    session['show'] = True
+    if request.method == 'GET':
+        return render_template("edit.html")
+
+@app.route('/delete/<int:id>')
+def delete(id):
+    print(session['recipes'])
+    for recipe in session['recipes']:
+        if recipe == session['recipes'][id]:
+            print(recipe)
+            session['recipes'].remove(recipe)
+
+    
+    return redirect(url_for('recipes'))
+        
+    

@@ -15,7 +15,7 @@ header {
     padding-top: 2em;
     padding-bottom: 5em;
     display: grid;
-    grid-template-columns: auto 70% auto;
+    grid-template-columns: 40% 48% auto;
 }
 
 .js div#preloader {
@@ -206,6 +206,7 @@ header {
 
 .menu {
     padding: 2em;
+    padding-left: 4.3em;
 }
 
 .menu a {
@@ -227,7 +228,7 @@ header {
     font-size: 4em;
     font-weight: 800;
     letter-spacing: 0em;
-    text-align: center;
+    text-align: left;
 }
 
 .signup {
@@ -243,6 +244,18 @@ header {
     padding: .5em;
     border-radius: .3em;
     background: #40596b;
+}
+
+.intro {
+    width: 90%;
+    margin: 2em auto;
+}
+
+.intro h2 {
+    color: #40596b;
+    font-size: 1.2em;
+    font-weight: 200;
+    padding: 1em;
 }
 
 .container {
@@ -293,7 +306,7 @@ header {
 
 .container .recipe .meta {
     display: grid;
-    grid-template-columns: 60% auto;
+    grid-template-columns: 50% auto;
 }
 
 .container .recipe .meta h3 {
@@ -301,10 +314,14 @@ header {
     text-transform: capitalize;
 }
 
+.container .recipe .meta ul {
+    float: right;
+}
+
 .container .recipe .meta ul li {
     display: inline;
     list-style: none;
-    font-size: .7em;
+    font-size: 1.2em;
     color: #E8CE4D;
     text-transform: lowercase;
 }
