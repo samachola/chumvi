@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block title %} My Chumvi {% endblock %} {% block body %} {% block loginbutton %} {% endblock %}
+<div class="intro">
+    <h2>My Recipes</h2>
+</div>
+<div class="container">
+    {% for recipe in session.recipes %}
+    <div class="recipe">
+        <div class="image">
+            <img src="/images/images.jpg" alt="tule recipes">
+        </div>
+        <div class="info">
+            <div class="title">{{recipe.title}}</div>
+            <div class="desc">
+                <p>{{recipe.process}}</p>
+            </div>
+            <div class="meta">
+                <h3>Sam Achola</h3>
+                <ul>
+                    <li><i class="fa fa-edit" onclick="location.href='/edit'" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-trash-o" onclick="location.href='/delete/{{session.recipes.index(recipe)}}'" aria-hidden="true"></i></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}
