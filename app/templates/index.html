@@ -1,8 +1,25 @@
 {% extends "base.html" %} {% block title %} Karibu Chumvi {% endblock %} {% block body %} {% block loginbutton %} {% endblock %}
 <div class="home">
-    <div class="steps">
 
+    <div class="logoimg">
+        <div class="image">
+            <img class="logoo" src="/images/salt.png">
+        </div>
+    </div>
+    <div class="act">
+        {% if session.show %} {% if not session.logged_in %}
 
+        <button onclick="location.href='/register'" class="explore">Explore
+            <span class="icon-right"></span>
+            <span class="icon-right after"></span>
+        </button>
+        <a class="signature" href="/register"></a>{% else %}
+
+        <button onclick="location.href='/recipes'" class="explore">Recipes
+            <span class="icon-right"></span>
+            <span class="icon-right after"></span>
+        </button>
+        <a class="signature" href="/recipes"></a> {% endif %} {% else %} {% endif %}
     </div>
 </div>
 {% endblock %}
