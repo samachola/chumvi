@@ -14,9 +14,9 @@
                 <p>{{recipe.ingredients}}</p>
             </div>
             <div class="meta">
-                <h3>Sam Achola</h3>
+                <h3>{{recipe.category}}</h3>
                 <ul>
-                    <li><i class="fa fa-edit" onclick="location.href='/edit'" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-edit" onclick="location.href='/edit/{{session.recipes.index(recipe)}}'" aria-hidden="true"></i></li>
                     <li><i class="fa fa-trash-o" onclick="location.href='/delete/{{session.recipes.index(recipe)}}'" aria-hidden="true"></i></li>
                 </ul>
             </div>

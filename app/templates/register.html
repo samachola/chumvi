@@ -3,18 +3,17 @@
 <div class="login">
     {% if error %}
     <p><strong>Error:</strong> {{ error }} {% endif %}
-        <form action="/register" method="post">
+        <form action="{{url_for('register')}}" method="post">
             <div class="inputwrapper">
-                <input type="text" name="fname" placeholder="First Name">
-            </div>
-
-            <div class="inputwrapper">
-                <input type="text" name="lname" placeholder="Last Name">
+                <label for="name">Name</label>
+                <input type="text" name="name" placeholder="Your Name">
             </div>
             <div class="inputwrapper">
+                <label for="name">Email</label>
                 <input type="email" name="email" placeholder="Enter Email">
             </div>
             <div class="inputwrapper">
+                <label for="name">Password</label>
                 <input type="password" name="password" placeholder="Enter Password">
             </div>
             <div class="submit">

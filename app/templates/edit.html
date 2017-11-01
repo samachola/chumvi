@@ -3,19 +3,32 @@
 <div class="login">
     {% if error %}
     <p><strong>Error:</strong> {{ error }} {% endif %}
-        <form action="{{url_for('recipe')}}" method="post">
+        <form action="/edit/{{recipe.id}}" method="post">
             <div class="inputwrapper">
                 <label>Title</label>
-                <input type="text" name="title" placeholder="Title">
+                <input type="text" name="title" placeholder="Title" value="{{recipe.title}}">
+            </div>
+
+            <div class="inputwrapper">
+                <label>Category</label>
+                <div class="select">
+                    <select name="category">
+                            <option value="{{recipe.category}}" selected>{{recipe.category}}</option>
+                            {% for category in session.categories %}
+                                <option value="{{category.title}}">{{category.title}}</option>
+                            {% endfor %}
+                        </select>
+                </div>
+
             </div>
 
             <div class="inputwrapper">
                 <label>Ingredients</label>
-                <input type="text" name="ingredients" placeholder="Ingredients">
+                <input type="text" name="ingredients" placeholder="Ingredients" value="{{recipe.ingredients}}">
             </div>
             <div class="inputwrapper">
                 <label>Go harm</label>
-                <textarea name="process" rows="5"></textarea>
+                <textarea name="process" rows="5">{{recipe.process}}</textarea>
             </div>
             <div class="submit">
                 <button type="submit" class="btn-login">Submit</button>

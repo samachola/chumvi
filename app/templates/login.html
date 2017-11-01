@@ -2,12 +2,14 @@
 
 <div class="login">
     {% if message %}
-    <p><strong>Successful:</strong> {{ message }} {% endif %}
-        <form method="post" action="/login">
+    <p><strong>Error:</strong> {{ message }} {% endif %}
+        <form method="post" action="{{url_for('login')}}">
             <div class="inputwrapper">
-                <input type="text" name="username" placeholder="Username">
+                <label>Email:</label>
+                <input type="email" name="email" placeholder="Email">
             </div>
             <div class="inputwrapper">
+                <label>Password:</label>
                 <input type="password" name="password" placeholder="Password">
             </div>
             <div class="submit">

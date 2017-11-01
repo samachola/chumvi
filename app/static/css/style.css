@@ -61,34 +61,34 @@ header {
     transform: translatez(0);
 }
 
-.text-w {
+.text-c {
     left: 0rem;
     transform: translate3d(0, -4rem, 0);
     animation: text-w 1050ms ease-in infinite;
 }
 
-.text-a {
-    left: 5.4rem;
+.text-h {
+    left: 4.4rem;
     animation-delay: 150ms;
 }
 
-.text-v {
-    left: 9.6rem;
+.text-u {
+    left: 8.6rem;
     animation-delay: 230ms;
 }
 
-.text-e {
-    left: 13rem;
+.text-m {
+    left: 12.8rem;
     animation-delay: 310ms;
 }
 
-.text-f {
-    left: 17.6rem;
+.text-v {
+    left: 18.8rem;
     animation-delay: 390ms;
 }
 
 .text-i {
-    left: 21.6rem;
+    left: 22.7rem;
     animation-delay: 470ms;
 }
 
@@ -258,6 +258,13 @@ header {
     padding: 1em;
 }
 
+.home {
+    width: 100%;
+    margin: 0 auto;
+    background: #40596b;
+    height: 80vh;
+}
+
 .container {
     width: 90%;
     margin: 0 auto;
@@ -268,7 +275,7 @@ header {
 
 .container .recipe {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 40% auto;
     margin: 1em .8em;
     background: #FFF;
     box-shadow: 0 4px 10px -2px rgba(64, 89, 107, .6);
@@ -286,7 +293,7 @@ header {
 }
 
 .container .recipe .info {
-    padding-left: 1em;
+    padding-left: 2em;
     color: rgb(64, 89, 107);
 }
 
@@ -341,10 +348,30 @@ header {
     font-size: .8em;
 }
 
+.login .cats {
+    width: 35%;
+    margin: 2em auto;
+}
+
+.login .cats li {
+    color: #40596b;
+    text-transform: uppercase;
+    list-style: none;
+    display: grid;
+    grid-template-columns: auto 10%;
+    width: 100%;
+    border-bottom: 1px solid #40566b;
+}
+
+.login .cats li i {
+    font-size: 1.5em;
+    padding: .5em;
+}
+
 .login form {
     width: 35%;
     margin: 0 auto;
-    padding-top: 2em;
+    padding-top: 0em;
 }
 
 .login form .inputwrapper {
@@ -368,6 +395,25 @@ header {
     border: 2px solid #40596b;
     color: #FFF;
     font-family: 'Ubuntu Condensed', sans-serif;
+}
+
+.login form .inputwrapper .select {
+    width: 100%;
+    background: #d4bc44;
+    padding: .2em .5em;
+    border: 2px solid #40596b;
+    color: #FFF;
+    font-family: 'Ubuntu Condensed', sans-serif;
+}
+
+.login form .inputwrapper .select select {
+    width: 100%;
+    padding: .5em;
+    background: #d4bc44;
+    border: none;
+    color: #FFF;
+    font-family: 'Ubuntu Condensed', sans-serif;
+    text-transform: capitalize;
 }
 
 .login form .inputwrapper textarea {

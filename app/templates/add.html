@@ -10,6 +10,19 @@
             </div>
 
             <div class="inputwrapper">
+                <label>Category</label>
+                <div class="select">
+                    <select name="category">
+                        <option selected>select category</option>
+                        {% for category in session.categories %}
+                            <option value="{{category.title}}">{{category.title}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="inputwrapper">
                 <label>Ingredients</label>
                 <input type="text" name="ingredients" placeholder="Ingredients">
             </div>
