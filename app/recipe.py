@@ -21,13 +21,17 @@ class Recipe:
 
     
     def viewRecipe(id):
+        response = {}
         for recipe in recipes:
             if recipe == recipes[id]:
-                print(id)
-                print(recipes[id])
-                return {'status': True, 'recipe': recipe}
+                response['status'] = True
+                response['title'] = recipe['title']
+                response['ingredients'] = recipe['ingredients']
+                response['process'] = recipe['process']                
             else:
-                return {'status': False, 'message': 'Recipe not found'}
+                response['status'] = False
+                
+        return response
 
     def deleteRecipe(id):
         for recipe in recipes:

@@ -4,14 +4,14 @@
 </div>
 <div class="container">
     {% for recipe in session.recipes %}
-    <div class="recipe" onclick="location.href='/view/{{session.recipes.index(recipe)}}'">
-        <div class="image">
+    <div class="recipe">
+        <div class="image" onclick="location.href='/view/{{session.recipes.index(recipe)}}'">
             <img src="/images/images.jpg" alt="tule recipes">
         </div>
         <div class="info">
-            <div class="title">{{recipe.title}}</div>
+            <div class="title" onclick="location.href='/view/{{session.recipes.index(recipe)}}'">{{recipe.title}}</div>
             <div class="desc">
-                <p>{{recipe.process}}</p>
+                <p>{{recipe.ingredients}}</p>
             </div>
             <div class="meta">
                 <h3>Sam Achola</h3>

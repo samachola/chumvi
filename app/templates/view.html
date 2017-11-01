@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block title %} My Chumvi {% endblock %} {% block body %} {% block loginbutton %} {% endblock %}
 <div class="intro">
-    <h2>Maindi Choma</h2>
+    <h2>{{recipe.title}}</h2>
 </div>
 <div class="container">
     <div class="recipe">
@@ -8,10 +8,11 @@
             <img src="/images/images.jpg" alt="tule recipes">
         </div>
         <div class="info">
-            <div class="title">Maindi Choma</div>
+            <div class="title">
+                <span>INGREDIENTS:</span> {{recipe.ingredients}}</div>
             <div class="desc">
-                <p>Lorem ipsum it amet consectetur adipisicing elit. Nostrum illo incidunt distincti it amet consectetur adipisicing elit. Nostrum illo incidunt distincti</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum illo incidunt distinctio ratione, dolor provident voluptatibus commodi voluptatum tempora quo, aliquid expedita iure optio laboriosam beatae quod, rerum quam et?</p>
+                <h2>Process: </h2>
+                <p>{{recipe.process}}</p>
             </div>
             <div class="meta">
                 <h3>Sam Achola</h3>

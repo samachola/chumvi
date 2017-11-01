@@ -68,15 +68,16 @@ def edit(id):
 @app.route('/view/<int:id>')
 def view(id):
     session['show'] = True
-    # resp = Recipe.viewRecipe(id)
     print(id)
-    return render_template("view.html")
+    resp = Recipe.viewRecipe(id)
+    print(resp)
+    #return render_template("view.html")
     
-    # if resp['status']:
-    #     print(resp['recipe'])
-    #     return render_template("view.html", recipe = resp['recipe'])
-    # else:
-    #     return redirect(url_for('recipes'))
+    if resp['status']:
+        print(resp['title'])
+        return render_template("view.html", recipe = resp)
+    else:
+        return redirect(url_for('recipes'))
 
 
 @app.route('/delete/<int:id>')
