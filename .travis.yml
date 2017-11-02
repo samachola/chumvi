@@ -32,5 +32,9 @@ deploy:
 notifications:  # specify build notifications
   email:
     - sam.achola@live.com
+
+after_success:
+  - coveralls
+  
 on_success: change
 on_failure: always

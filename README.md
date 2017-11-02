@@ -1,6 +1,7 @@
 # chumvi 
 
-<a href="#"><img src="https://travis-ci.org/samachola/chumvi.svg?branch=master" /></a>
+<a href="#"><img src="https://travis-ci.org/samachola/chumvi.svg?branch=master" /></a> <a href='https://coveralls.io/github/samachola/chumvi?branch=master'><img src='https://coveralls.io/repos/github/samachola/chumvi/badge.svg?branch=master' alt='Coverage Status' /></a>
+
 
 Avast ye fellow foodies and passionate cooks. Yummy recipes provides a platform for users to keep track of their awesome recipes and share with others if they so wish.
 
