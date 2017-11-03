@@ -15,10 +15,10 @@
         </form>
 
         <div class="cats">
-            {% for category in session.categories %}
+            {% for item in session.categs %} {% if session.current_user == item['user'] %}
             <li>
-                <h4>{{category.title}}</h4> <i class="fa fa-trash-o" onclick="location.href='/delete_category/{{session.categories.index(category)}}'" aria-hidden="true"></i></li>
-            {% endfor %}
+                <h4>{{item['categories']}}</h4> <i class="fa fa-trash-o" onclick="location.href='/delete_category/{{item['id']}}'" aria-hidden="true"></i></li>
+            {% endif %} {% endfor %}
         </div>
 </div>
 {% endblock %}
