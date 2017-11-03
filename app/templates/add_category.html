@@ -2,23 +2,25 @@
 
 <div class="login">
     {% if error %}
-    <p><strong>Error:</strong> {{ error }} {% endif %}
-        <form action="{{url_for('category')}}" method="post">
-            <div class="inputwrapper">
-                <label>Category Name</label>
-                <input type="text" name="title" placeholder="Title">
-            </div>
-            <div class="submit">
-                <button type="submit" class="btn-login">Submit</button>
+    <p><strong>Error:</strong> {{ error }} {% endif %} {% if success %}
+        <p><strong>Success:</strong> {{ success }} {% endif %}
 
-            </div>
-        </form>
+            <form action="{{url_for('category')}}" method="post">
+                <div class="inputwrapper">
+                    <label>Category Name</label>
+                    <input type="text" name="title" placeholder="Title">
+                </div>
+                <div class="submit">
+                    <button type="submit" class="btn-login">Submit</button>
 
-        <div class="cats">
-            {% for item in session.categs %} {% if session.current_user == item['user'] %}
-            <li>
-                <h4>{{item['categories']}}</h4> <i class="fa fa-trash-o" onclick="location.href='/delete_category/{{item['id']}}'" aria-hidden="true"></i></li>
-            {% endif %} {% endfor %}
-        </div>
+                </div>
+            </form>
+
+            <div class="cats">
+                {% if categories %} {% for item in categories %}
+                <li>
+                    <h4>{{ item.title }}</h4> <i class="fa fa-trash-o" onclick="location.href='/delete_category/{{categories.index(item)}}'" aria-hidden="true"></i></li>
+                {% endfor%} {% endif %}
+            </div>
 </div>
 {% endblock %}

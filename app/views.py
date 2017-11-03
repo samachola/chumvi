@@ -103,6 +103,11 @@ def register():
 def category():
     session['show'] = True
     if request.method == 'GET':
+        for person in user_list:
+            if person.email == session['current_user']:
+                categories = person.categories
+                return render_template('add_category.html', categories = person.categories)
+            
         return render_template("add_category.html")
     else:
         new_category = Categoly(request.form['title'])
@@ -111,31 +116,23 @@ def category():
                 if person.email == session['current_user']:
                     person.categories.append(new_category)
                     print(person.categories)
-                    for cat in person.categories:
-                        user_categories.append({'user': person.email, 'categories':cat.title, 'id': cat.id})
-                    print(user_categories)
-                    session['categs'] = user_categories
-                    return redirect(url_for('category'))
+                    return render_template('add_category.html', categories = person.categories)
         else:
             return render_template("add_category.html")
-        # response = Category.addCategory(request.form['title'])
-        
-        # if response['status']:
-        #     session['categories'] = response['categories']
-        #     return redirect(url_for('category'))
-        # else:
-        #     return render_template("add_category.html", error = response['message'])
 
 
         
-@app.route('/delete_category/<id>')
+@app.route('/delete_category/<int:id>')
 def deleteCategory(id):
     for person in user_list:
-        if person.categories.id == id:
-            print(id)
+        if person.email == session['current_user']:
+            for cat in person.categories:
+                if cat == person.categories[id]:                    
+                    person.categories.remove(cat)
+            
             #person.categories.remove(category)
             message = "Item successfully deleted"
-            return render_template("add_category.html", error = message)
+            return render_template("add_category.html", categories = person.categories, success = message)
         else:
             message = "Item not found"
             return render_template("add_category.html", error = message)
@@ -144,7 +141,6 @@ def deleteCategory(id):
 @app.route('/recipes')
 def recipes():
     session['show'] = True
-
     return render_template("recipes.html")
 
 @app.route('/addrecipe', methods=['GET', 'POST'])
