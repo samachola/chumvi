@@ -14,6 +14,12 @@ class FlaskTestCase(unittest.TestCase):
         response = tester.post('/register', data=dict(name='', email='', password=''))
         self.assertIn(b'All input fields are required', response.data, msg="Post registration Failed")
 
+
+    def test_registration_params(self):
+        tester = app.test_client(self)
+        response = tester.post('/register', data=dict(name='Achola', email='hello@achola.io', password='123456'), follow_redirects=True)
+        self.assertIn(b'Login', response.data, msg="Post registration Failed")
+
     def test_login(self):
         tester = app.test_client(self)
         response = tester.get('/login', data=dict(username='admin', password='password'), follow_redirects=True)

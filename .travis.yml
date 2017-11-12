@@ -11,6 +11,7 @@ install:
 
 script:
   - python tests.py
+  - coveralls
 
 # blacklist  
 branches:
@@ -33,8 +34,7 @@ notifications:  # specify build notifications
   email:
     - sam.achola@live.com
 
-after_success:
-  - coveralls
+after_success: "coveralls"
   
 on_success: change
 on_failure: always
