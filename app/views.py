@@ -3,13 +3,13 @@ from app import app, recipe, category, user
 import re
 
 Recipe = recipe.Recipe
-Category = category.Category
 User = user.User
 Lecipe = user.Recipe
-Categoly = user.Category
+Category = user.Category
 
 user_list = []
 user_categories = []
+current_person = {}
 
 @app.route('/')
 def index():
@@ -38,11 +38,11 @@ def login():
                         session['logged_in'] = True
                         print("***********************person***************************")
                         print(person.name)
-                        session['current_user'] = person.email
+                        current_person['email'] = person.email
                         print("***********************person***************************")
                         return redirect(url_for('index'))
                     
-                message = "Username and Password incorrect"
+                    message = "Username and Password incorrect"
                 session['logged_in'] = False
                 return render_template("login.html", message = message)
             else:
@@ -58,6 +58,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.clear()
+    current_person = {}
     return redirect(url_for('login'))
 
 
@@ -104,38 +105,39 @@ def category():
     session['show'] = True
     if request.method == 'GET':
         for person in user_list:
-            if person.email == session['current_user']:
+            if person.email == current_person['email'] :
                 categories = person.categories
                 return render_template('add_category.html', categories = person.categories)
             
         return render_template("add_category.html")
     else:
-        new_category = Categoly(request.form['title'])
+        new_category = Category(request.form['title'])
         if new_category:
             for person in user_list:
-                if person.email == session['current_user']:
+                if person.email == current_person['email'] :
                     person.categories.append(new_category)
                     print(person.categories)
                     return render_template('add_category.html', categories = person.categories)
-        else:
-            return render_template("add_category.html")
+        
+    return render_template("add_category.html")
 
 
         
-@app.route('/delete_category/<int:id>')
-def deleteCategory(id):
+@app.route('/categori/<id>')
+def deleteCategory(id):    
     for person in user_list:
-        if person.email == session['current_user']:
+        if person.email == current_person['email'] :
+            print(current_person['email'])  
+            #person.categories.remove(person.categories[id])
             for cat in person.categories:
-                if cat == person.categories[id]:                    
-                    person.categories.remove(cat)
+                if cat.id == id:
+                    print(id)        
             
-            #person.categories.remove(category)
             message = "Item successfully deleted"
-            return render_template("add_category.html", categories = person.categories, success = message)
+            return redirect(url_for('category'))
         else:
             message = "Item not found"
-            return render_template("add_category.html", error = message)
+            return render_template("add_category.html", categories = person.categories, error = message)
 
 
 @app.route('/recipes')
