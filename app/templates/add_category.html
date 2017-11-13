@@ -19,7 +19,7 @@
             <div class="cats">
                 {% if categories %} {% for item in categories %}
                 <li>
-                    <h4>{{ item.title }}</h4> <i class="fa fa-trash-o" onclick="location.href='/categori/{{item.id}}'" aria-hidden="true"></i>
+                    <h4>{{ item.title }}</h4> <i class="fa fa-trash-o" onclick="location.href='/category/{{categories.index(item)}}'" aria-hidden="true"></i>
                 </li>
                 {% endfor%} {% endif %}
             </div>

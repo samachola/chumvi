@@ -3,10 +3,10 @@
 <div class="login">
     {% if error %}
     <p><strong>Error:</strong> {{ error }} {% endif %}
-        <form action="/edit/{{recipe.id}}" method="post">
+        <form action="/edit/{{id}}" method="post">
             <div class="inputwrapper">
-                <label>Title</label>
-                <input type="text" name="title" placeholder="Title" value="{{recipe.title}}">
+                <label>Title {{id}}</label>
+                <input type="text" name="title" placeholder="Title" value="{{recipe.name}}">
             </div>
 
             <div class="inputwrapper">

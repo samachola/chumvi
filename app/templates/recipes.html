@@ -3,21 +3,21 @@
     <h2>My Recipes</h2>
 </div>
 <div class="container">
-    {% for recipe in session.recipes %}
+    {% for recipe in recipes %}
     <div class="recipe">
-        <div class="image" onclick="location.href='/view/{{session.recipes.index(recipe)}}'">
+        <div class="image" onclick="location.href='/view/{{recipes.index(recipe)}}'">
             <img src="/images/images.jpg" alt="tule recipes">
         </div>
         <div class="info">
-            <div class="title" onclick="location.href='/view/{{session.recipes.index(recipe)}}'">{{recipe.title}}</div>
+            <div class="title" onclick="location.href='/view/{{recipes.index(recipe)}}'">{{recipe.name}}</div>
             <div class="desc">
                 <p>{{recipe.ingredients}}</p>
             </div>
             <div class="meta">
                 <h3>{{recipe.category}}</h3>
                 <ul>
-                    <li><i class="fa fa-edit" onclick="location.href='/edit/{{session.recipes.index(recipe)}}'" aria-hidden="true"></i></li>
-                    <li><i class="fa fa-trash-o" onclick="location.href='/delete/{{session.recipes.index(recipe)}}'" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-edit" onclick="location.href='/edit/{{recipes.index(recipe)}}'" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-trash-o" onclick="location.href='/delete/{{recipes.index(recipe)}}'" aria-hidden="true"></i></li>
                 </ul>
             </div>
 
