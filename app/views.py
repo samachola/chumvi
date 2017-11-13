@@ -2,22 +2,17 @@ from flask import render_template, redirect, url_for, request, session, flash, j
 from app import app, recipe, category, user
 import re
 
-Recipe = recipe.Recipe
-Category = category.Category
+Recipe = user.Recipe
 User = user.User
 Lecipe = user.Recipe
-Categoly = user.Category
+Category = user.Category
 
 user_list = []
-user_categories = []
+current_person = {}
 
 @app.route('/')
 def index():
     session['show'] = True
-    print("***********************current_user***************************")
-    if 'current_user' in session:
-        print(session['current_user'])
-    print("***********************current_user***************************")
     return render_template("index.html")
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -38,11 +33,13 @@ def login():
                         session['logged_in'] = True
                         print("***********************person***************************")
                         print(person.name)
-                        session['current_user'] = person.email
+                        current_person['email'] = person.email
+                        current_person['categories'] = person.categories
+                        current_person['recipes'] = person.recipes
                         print("***********************person***************************")
                         return redirect(url_for('index'))
                     
-                message = "Username and Password incorrect"
+                    message = "Username and Password incorrect"
                 session['logged_in'] = False
                 return render_template("login.html", message = message)
             else:
@@ -58,6 +55,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.clear()
+    current_person = None
     return redirect(url_for('login'))
 
 
@@ -103,75 +101,59 @@ def register():
 def category():
     session['show'] = True
     if request.method == 'GET':
-        for person in user_list:
-            if person.email == session['current_user']:
-                categories = person.categories
-                return render_template('add_category.html', categories = person.categories)
-            
-        return render_template("add_category.html")
+        categories = current_person['categories']
+        return render_template('add_category.html', categories = categories)
     else:
-        new_category = Categoly(request.form['title'])
+        new_category = Category(request.form['title'])
         if new_category:
-            for person in user_list:
-                if person.email == session['current_user']:
-                    person.categories.append(new_category)
-                    print(person.categories)
-                    return render_template('add_category.html', categories = person.categories)
-        else:
-            return render_template("add_category.html")
+            current_person['categories'].append(new_category)
+            return render_template('add_category.html', categories = current_person['categories'])
+            
+        
+    return render_template("add_category.html")
 
 
         
-@app.route('/delete_category/<int:id>')
+@app.route('/category/<int:id>')
 def deleteCategory(id):
-    for person in user_list:
-        if person.email == session['current_user']:
-            for cat in person.categories:
-                if cat == person.categories[id]:                    
-                    person.categories.remove(cat)
-            
-            #person.categories.remove(category)
-            message = "Item successfully deleted"
-            return render_template("add_category.html", categories = person.categories, success = message)
-        else:
-            message = "Item not found"
-            return render_template("add_category.html", error = message)
+    current_person['categories'].pop(id)
+    return redirect(url_for('category'))
 
 
 @app.route('/recipes')
 def recipes():
     session['show'] = True
-    return render_template("recipes.html")
+    return render_template("recipes.html", recipes = current_person['recipes'])
 
 @app.route('/addrecipe', methods=['GET', 'POST'])
 def recipe():
     session['show'] = True
     if request.method == 'POST':
-        resp = Recipe.addRecipe(request.form['title'], request.form['category'], request.form['ingredients'], request.form['process'])
-        if resp['status']:
-            print(resp['recipes'])
-            session['recipes'] = resp['recipes']
+        new_recipe = Recipe(request.form['title'], request.form['category'], request.form['ingredients'], request.form['process'])
+        if new_recipe:
+            current_person['recipes'].append(new_recipe)
             return redirect(url_for('recipes'))
         else:
-            return render_template("add.html", error = resp['msg'])
+            return render_template("add.html", error = "Could not add recipe")
 
     else:                   
-        return render_template("add.html")
+        return render_template("add.html", categories = current_person['categories'])
 
 
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
     session['show'] = True
-    resp = Recipe.viewRecipe(id)
+    recipe = current_person['recipes'][id]
     if request.method == 'GET':
-        return render_template("edit.html", recipe = resp)
+        return render_template("edit.html", recipe = recipe, id = id)
     else:
-        response = Recipe.updateRecipe(id, request.form['title'], request.form['category'], request.form['ingredients'], request.form['process'])
-        if response['status']:
-            session['recipes'] = response['recipes']
+        current_person['recipes'].pop(id)
+        update_recipe = Recipe(request.form['title'], request.form['category'], request.form['ingredients'], request.form['process'])
+        if update_recipe:
+            current_person['recipes'].append(update_recipe)
             return redirect(url_for('recipes'))
         else:
-            return render_template("edit.html", recipe = resp)
+            return render_template("edit.html", recipe = recipe, id = id)
                      
 
 @app.route('/view/<int:id>')

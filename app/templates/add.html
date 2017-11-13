@@ -14,7 +14,7 @@
                 <div class="select">
                     <select name="category">
                         <option selected>select category</option>
-                        {% for category in session.categories %}
+                        {% for category in categories %}
                             <option value="{{category.title}}">{{category.title}}</option>
                         {% endfor %}
                     </select>
