@@ -1,6 +1,7 @@
-from flask import render_template, redirect, url_for, request, session, flash, json
+from flask import render_template, redirect, url_for, request, session, flash, json, g
 from app import app, recipe, category, user
 import re
+from functools import wraps
 
 Recipe = user.Recipe
 User = user.User
@@ -9,6 +10,14 @@ Category = user.Category
 
 user_list = []
 current_person = {}
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if bool(current_person) is False:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 @app.route('/')
 def index():
@@ -98,6 +107,7 @@ def register():
     return render_template("register.html", error = message)
 
 @app.route('/category', methods=['GET', 'POST'])
+@login_required
 def category():
     session['show'] = True
     if request.method == 'GET':
@@ -115,17 +125,20 @@ def category():
 
         
 @app.route('/category/<int:id>')
+@login_required
 def deleteCategory(id):
     current_person['categories'].pop(id)
     return redirect(url_for('category'))
 
 
 @app.route('/recipes')
+@login_required
 def recipes():
     session['show'] = True
     return render_template("recipes.html", recipes = current_person['recipes'])
 
 @app.route('/addrecipe', methods=['GET', 'POST'])
+@login_required
 def recipe():
     session['show'] = True
     if request.method == 'POST':
@@ -141,6 +154,7 @@ def recipe():
 
 
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
 def edit(id):
     session['show'] = True
     recipe = current_person['recipes'][id]
@@ -157,6 +171,7 @@ def edit(id):
                      
 
 @app.route('/view/<int:id>')
+@login_required
 def view(id):
     session['show'] = True
     print(id)
@@ -172,6 +187,7 @@ def view(id):
 
 
 @app.route('/delete/<int:id>')
+@login_required
 def delete(id):
     resp = Recipe.deleteRecipe(id)
 
