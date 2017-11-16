@@ -3,22 +3,27 @@
 <div class="login">
     {% if error %}
     <p><strong>Error:</strong> {{ error }} {% endif %}
-        <form action="{{url_for('recipe')}}" method="post">
+        <form action="{{url_for('add_recipe')}}" method="post">
             <div class="inputwrapper">
                 <label>Title</label>
                 <input type="text" name="title" placeholder="Title">
             </div>
 
             <div class="inputwrapper">
+                {% if categories is defined and categories|length > 0 %}
                 <label>Category</label>
                 <div class="select">
                     <select name="category">
-                        <option selected>select category</option>
-                        {% for category in categories %}
-                            <option value="{{category.title}}">{{category.title}}</option>
-                        {% endfor %}
-                    </select>
+                            <option selected>select category</option>
+                            {% for category in categories %}
+                                <option value="{{category.title}}">{{category.title}}</option>
+                            {% endfor %}
+                            <option onclick="location.href='/category'">Add Category</option>
+                        </select>
                 </div>
+                {% else %}
+                <label>Category</label>
+                <a href="{{url_for('categories')}}">Add Category</a> {% endif %}
 
             </div>
 
@@ -32,7 +37,6 @@
             </div>
             <div class="submit">
                 <button type="submit" class="btn-login">Submit</button>
-
             </div>
         </form>
 </div>

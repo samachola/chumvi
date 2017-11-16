@@ -5,11 +5,17 @@
     <p><strong>Error:</strong> {{ error }} {% endif %} {% if success %}
         <p><strong>Success:</strong> {{ success }} {% endif %}
 
-            <form action="{{url_for('category')}}" method="post">
+            <form action="{{url_for('categories')}}" method="post">
                 <div class="inputwrapper">
                     <label>Category Name</label>
                     <input type="text" name="title" placeholder="Title">
                 </div>
+
+                <div class="inputwrapper">
+                    <label>Description</label>
+                    <input type="text" name="description" placeholder="Description">
+                </div>
+
                 <div class="submit">
                     <button type="submit" class="btn-login">Submit</button>
 
@@ -19,7 +25,17 @@
             <div class="cats">
                 {% if categories %} {% for item in categories %}
                 <li>
-                    <h4>{{ item.title }}</h4> <i class="fa fa-trash-o" onclick="location.href='/category/{{categories.index(item)}}'" aria-hidden="true"></i>
+                    <h4>{{ item.title }} </h4>
+                    <a class="tooltip" href="#"><i class="fa fa-fw fa-info-circle"></i>
+                        <span class="tooltip-content">
+                            <span class="tooltip-text">
+                                <span class="tooltip-inner">{{ item.description }}</span>
+                            </span>
+                        </span>
+                    </a>
+                    <i class="fa fa-pencil-square-o" onclick="location.href='/edit_category/{{categories.index(item)}}'"></i>
+                    <i class="fa fa-trash-o" onclick="location.href='/category/{{categories.index(item)}}'" aria-hidden="true"></i>
+
                 </li>
                 {% endfor%} {% endif %}
             </div>

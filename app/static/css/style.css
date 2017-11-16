@@ -375,9 +375,15 @@ header {
     text-transform: uppercase;
     list-style: none;
     display: grid;
-    grid-template-columns: auto 10%;
+    grid-template-columns: auto 10% 10% 10%;
     width: 100%;
     border-bottom: 1px solid #40566b;
+}
+
+.login .cats li a {
+    color: #40566b;
+    text-decoration: none;
+    display: inline;
 }
 
 .login .cats li i {

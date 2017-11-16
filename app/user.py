@@ -1,6 +1,6 @@
 import uuid
 
-class User(object):
+class User():
     """ User class user to add new users and add categories. """
     def __init__(self, name, email, password):
         self.name = name
@@ -9,8 +9,11 @@ class User(object):
         self.categories = []
         self.recipes = []
 
-    def addCategory(self, title):
-        self.categories.append(title)
+    def addCategory(self, title, description):
+        category_dict = {}
+        category_dict['title'] = title
+        category_dict['description'] = description
+        self.categories.append(category_dict)
         return {'status': True, 'msg': "Category added successfully"}
 
     def removeCategory(self, title):
@@ -28,11 +31,13 @@ class User(object):
         return {'status': True}
 
         
-class Category(object):
+class Category():
     """ Add Categories to a user. """
-    def __init__(self, title):
+    def __init__(self, title, description):
         self.title = title
+        self.description = description
         self.id = uuid.uuid4()
+        
 
       
 class Recipe(object):

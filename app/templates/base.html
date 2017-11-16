@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/tooltip-line.css">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <title> {% block title %} {% endblock %}</title>
 </head>
@@ -35,7 +36,10 @@
     <header>
         <div class="menu">
             {% if session.show %} {% if session.logged_in %}
-            <a href="{{url_for('index')}}">HOME</a> <a href="{{url_for('recipe')}}">ADD RECIPE</a> <a href="{{url_for('category')}}">ADD CATEGORY</a> <a href="{{url_for('recipes')}}">MY RECIPES</a> {% endif %}{% endif %}
+            <a href="{{url_for('index')}}">HOME</a>
+            <a href="{{url_for('add_recipe')}}">ADD RECIPE</a>
+            <a href="{{url_for('categories')}}">ADD CATEGORY</a>
+            <a href="{{url_for('recipes')}}">MY RECIPES</a> {% endif %}{% endif %}
 
         </div>
         <div class="logo">chumvi</div>

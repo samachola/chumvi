@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, request, session, flash, json, g
+from flask import render_template, redirect, url_for, request, session, flash, json
 from app import app, recipe, category, user
 import re
 from functools import wraps
@@ -40,12 +40,9 @@ def login():
                 for person in user_list:
                     if person.email == request.form['email'] and person.password == request.form['password']:
                         session['logged_in'] = True
-                        print("***********************person***************************")
-                        print(person.name)
                         current_person['email'] = person.email
                         current_person['categories'] = person.categories
                         current_person['recipes'] = person.recipes
-                        print("***********************person***************************")
                         return redirect(url_for('index'))
                     
                     message = "Username and Password incorrect"
@@ -64,13 +61,12 @@ def login():
 @app.route('/logout')
 def logout():
     session.clear()
-    current_person = None
     return redirect(url_for('login'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    """ 
+    """
     This method is creating a new user and 
     adding the user to the list of users in session.
     """
@@ -96,9 +92,6 @@ def register():
             new_user = User(request.form['name'], request.form['email'], request.form['password'])
             user_list.append(new_user)
 
-            print(new_user.name)
-            print(user_list)
-
             if new_user:
                 return redirect(url_for('login'))
             else:
@@ -108,27 +101,47 @@ def register():
 
 @app.route('/category', methods=['GET', 'POST'])
 @login_required
-def category():
+def categories():
     session['show'] = True
     if request.method == 'GET':
-        categories = current_person['categories']
-        return render_template('add_category.html', categories = categories)
+        return render_template('add_category.html', categories = current_person['categories'])
     else:
-        new_category = Category(request.form['title'])
+        
+        new_category = Category(request.form['title'], request.form['description'])
+        print(new_category.title)
         if new_category:
-            current_person['categories'].append(new_category)
+            category_item = {}
+            category_item['title'] = new_category.title
+            category_item['description'] = new_category.description          
+            current_person['categories'].append(category_item)
             return render_template('add_category.html', categories = current_person['categories'])
             
         
     return render_template("add_category.html")
 
+@app.route('/edit_category/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_category(id):
+    session['show'] = True
+    category = current_person['categories'][id]
+    if request.method == 'GET':
+        return render_template("edit_category.html", category = category, id = id)
+    else:
+        current_person['categories'].pop(id)
+        update_category = Category(request.form['title'], request.form['description'])
+        if update_category:
+            current_person['categories'].append(update_category)
+            return redirect(url_for('categories'))
+        else:
+            return render_template("edit_category.html", category = category, id = id)
+    
 
         
 @app.route('/category/<int:id>')
 @login_required
-def deleteCategory(id):
+def delete_category(id):
     current_person['categories'].pop(id)
-    return redirect(url_for('category'))
+    return redirect(url_for('categories'))
 
 
 @app.route('/recipes')
@@ -139,7 +152,7 @@ def recipes():
 
 @app.route('/addrecipe', methods=['GET', 'POST'])
 @login_required
-def recipe():
+def add_recipe():
     session['show'] = True
     if request.method == 'POST':
         new_recipe = Recipe(request.form['title'], request.form['category'], request.form['ingredients'], request.form['process'])
@@ -174,13 +187,10 @@ def edit(id):
 @login_required
 def view(id):
     session['show'] = True
-    print(id)
     resp = Recipe.viewRecipe(id)
-    print(resp)
     #return render_template("view.html")
     
     if resp['status']:
-        print(resp['title'])
         return render_template("view.html", recipe = resp)
     else:
         return redirect(url_for('recipes'))
@@ -189,11 +199,7 @@ def view(id):
 @app.route('/delete/<int:id>')
 @login_required
 def delete(id):
-    resp = Recipe.deleteRecipe(id)
-
-    if resp['status']:
-        session['recipes'] = resp['recipes']
-    
+    current_person['recipes'].pop(id)
     return redirect(url_for('recipes'))
 
  
