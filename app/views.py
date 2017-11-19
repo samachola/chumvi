@@ -73,11 +73,9 @@ def register():
     session['show'] = False
     message = None   
     
-    if request.method == 'POST':
-                
-        if not request.form['password'] or request.form['password'] == "":
+    if request.method == 'POST':                
+        if not request.form['password'] or request.form['password'] == "" or request.form['password'].isspace():
             message = "Password is required"
-
         elif request.form['name'] == "" or request.form['name'].isspace():
             message = "Name cannot be an empty string"
         elif not check_mail(request.form['email']) or request.form['email'] == "":
@@ -105,8 +103,15 @@ def categories():
     session['show'] = True
     if request.method == 'GET':
         return render_template('add_category.html', categories = current_person['categories'])
-    else:
-        
+    else:  
+        error = None
+        if request.form['title'].isspace() or request.form['title'] == '':
+            error = "Category title is required"
+            return render_template('add_category.html', categories = current_person['categories'], error = error)
+        if request.form['description'].isspace() or request.form['description'] == '':
+            error = "Category description is required"
+            return render_template('add_category.html', categories = current_person['categories'], error = error)
+
         new_category = Category(request.form['title'], request.form['description'])
         print(new_category.title)
         if new_category:
@@ -127,6 +132,15 @@ def edit_category(id):
     if request.method == 'GET':
         return render_template("edit_category.html", category = category, id = id)
     else:
+
+        error = None
+        if request.form['title'].isspace() or request.form['title'] == '':
+            error = "Category title is required"
+            return render_template("edit_category.html", category = category, id = id, error = error)
+        if request.form['description'].isspace() or request.form['description'] == '':
+            error = "Category description is required"
+            return render_template("edit_category.html", category = category, id = id, error = error)
+
         current_person['categories'].pop(id)
         update_category = Category(request.form['title'], request.form['description'])
         if update_category:
@@ -154,7 +168,21 @@ def recipes():
 @login_required
 def add_recipe():
     session['show'] = True
-    if request.method == 'POST':
+    if request.method == 'POST':        
+        error = None
+        if request.form['title'].isspace() or request.form['title'] == '':
+            error = "Recipe title cannot be empty"
+            return render_teplate('add.html', error = error)
+        if not request.form['category'] or request.form['category'].isspace() or request.form['category'] == '':
+            error = "Recipe category cannot be empty"
+            return render_teplate('add.html', error = error)
+        if request.form['ingredients'].isspace() or request.form['ingredients'] == '':
+            error = "Recipe ingredients cannot be empty"
+            return render_teplate('add.html', error = error)
+        if request.form['process'].isspace() or request.form['process'] == '':
+            error = "How are we going to cook that! Add some process priss!!"
+            return render_teplate('add.html', error = error)
+
         new_recipe = Recipe(request.form['title'], request.form['category'], request.form['ingredients'], request.form['process'])
         if new_recipe:
             current_person['recipes'].append(new_recipe)
