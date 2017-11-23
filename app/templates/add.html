@@ -14,12 +14,12 @@
                 <label>Category</label>
                 <div class="select">
                     <select name="category">
-                            <option selected>select category</option>
-                            {% for category in categories %}
-                                <option value="{{category.title}}">{{category.title}}</option>
-                            {% endfor %}
-                            <option onclick="location.href='/category'">Add Category</option>
-                        </select>
+                        <option selected>select category</option>
+                        {% for category in categories %}
+                            <option value="{{category.id}}">{{category.title}}</option>
+                        {% endfor %}
+                        <option onclick="location.href='/category'">Add Category</option>
+                    </select>
                 </div>
                 {% else %}
                 <label>Category</label>

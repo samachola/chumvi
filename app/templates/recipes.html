@@ -14,11 +14,16 @@
                 <p>{{recipe.ingredients}}</p>
             </div>
             <div class="meta">
-                <h3>{{recipe.category}}</h3>
+
+                {% for cat in categories %} {% if recipe['category']|string() == cat['id']|string() %}
+                <h3>{{cat.title}}</h3>
+                {% else %} {% endif %}{% endfor %}
+
                 <ul>
                     <li><i class="fa fa-edit" onclick="location.href='/edit/{{recipes.index(recipe)}}'" aria-hidden="true"></i></li>
                     <li><i class="fa fa-trash-o" onclick="location.href='/delete/{{recipes.index(recipe)}}'" aria-hidden="true"></i></li>
                 </ul>
+
             </div>
 
         </div>

@@ -13,9 +13,11 @@
                 <label>Category</label>
                 <div class="select">
                     <select name="category">
-                            <option value="{{recipe.category}}" selected>{{recipe.category}}</option>
-                            {% for category in session.categories %}
-                                <option value="{{category.title}}">{{category.title}}</option>
+                            {% for cat in categories %} {% if recipe.category|string() == cat['id']|string() %}
+                            <option value="{{recipe.category}}" selected>{{cat.title}}</option>
+                            {% else %} {% endif %}{% endfor %}
+                            {% for category in categories %}
+                                <option value="{{category.id}}">{{category.title}}</option>
                             {% endfor %}
                         </select>
                 </div>

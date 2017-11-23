@@ -2,6 +2,7 @@ from flask import render_template, redirect, url_for, request, session, flash, j
 from app import app, recipe, category, user
 import re
 from functools import wraps
+import uuid
 
 Recipe = user.Recipe
 User = user.User
@@ -116,6 +117,7 @@ def categories():
         print(new_category.title)
         if new_category:
             category_item = {}
+            category_item['id'] = uuid.uuid4()
             category_item['title'] = new_category.title
             category_item['description'] = new_category.description          
             current_person['categories'].append(category_item)
@@ -141,14 +143,12 @@ def edit_category(id):
             error = "Category description is required"
             return render_template("edit_category.html", category = category, id = id, error = error)
 
-        current_person['categories'].pop(id)
-        update_category = Category(request.form['title'], request.form['description'])
-        if update_category:
-            current_person['categories'].append(update_category)
-            return redirect(url_for('categories'))
-        else:
-            return render_template("edit_category.html", category = category, id = id)
-    
+        #current_person['categories'].pop(id)
+        category['title'] = request.form['title']
+        category['description'] = request.form['description']
+
+        return redirect(url_for('categories'))
+        #update_category = Category(request.form['title'], request.form['description'])    
 
         
 @app.route('/category/<int:id>')
@@ -162,7 +162,7 @@ def delete_category(id):
 @login_required
 def recipes():
     session['show'] = True
-    return render_template("recipes.html", recipes = current_person['recipes'])
+    return render_template("recipes.html", recipes = current_person['recipes'], categories = current_person['categories'])
 
 @app.route('/addrecipe', methods=['GET', 'POST'])
 @login_required
@@ -200,7 +200,7 @@ def edit(id):
     session['show'] = True
     recipe = current_person['recipes'][id]
     if request.method == 'GET':
-        return render_template("edit.html", recipe = recipe, id = id)
+        return render_template("edit.html", recipe = recipe, id = id, categories = current_person['categories'])
     else:
         current_person['recipes'].pop(id)
         update_recipe = Recipe(request.form['title'], request.form['category'], request.form['ingredients'], request.form['process'])
@@ -208,20 +208,19 @@ def edit(id):
             current_person['recipes'].append(update_recipe)
             return redirect(url_for('recipes'))
         else:
-            return render_template("edit.html", recipe = recipe, id = id)
+            return render_template("edit.html", recipe = recipe, id = id, categories = current_person['categories'])
                      
 
 @app.route('/view/<int:id>')
 @login_required
 def view(id):
     session['show'] = True
-    resp = Recipe.viewRecipe(id)
-    #return render_template("view.html")
+    recipe_item = current_person['recipes'][id]
     
-    if resp['status']:
-        return render_template("view.html", recipe = resp)
-    else:
-        return redirect(url_for('recipes'))
+    return render_template("view.html", recipe = recipe_item)
+    
+        
+    
 
 
 @app.route('/delete/<int:id>')

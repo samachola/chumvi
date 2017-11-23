@@ -15,7 +15,9 @@
                 <p>{{recipe.process}}</p>
             </div>
             <div class="meta">
-                <h3>category: {{recipe.category}}</h3>
+                {% for cat in categories %} {% if recipe.category|string() == cat['id']|string() %}
+                <h3>category: {{cat.title}}</h3>
+                {% else %} {% endif %}{% endfor %}
             </div>
 
         </div>
