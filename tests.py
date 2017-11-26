@@ -137,14 +137,39 @@ class TestJikoni(unittest.TestCase):
         self.add_category()
         self.add_recipe()
         response = tester.get('/delete/0', follow_redirects=True)
-        self.assertIn(b'My Recipes', response.data, msg='could not deleter recipe')
+        self.assertIn(b'My Recipes', response.data, msg='could not delete recipe')
 
-    # def test_add_category(self):
-    #     self.test_registration_params()
-    #     self.test_login()
-    #     tester = app.test_client(self)
-    #     response = tester.post('/category', data=dict(title="Breakfast", description="Breakfast is awesome"))
-    #     self.assertIn(b'Breakfast', response.data, msg="Add Category Failed!")
+    def test_add_category(self):
+        tester = app.test_client(self)
+        self.signup()
+        self.login()
+        response = tester.post('/category', data=dict(title="Breakfast", description="Breakfast is awesome"), follow_redirects=True)
+        self.assertIn(b'Breakfast', response.data, msg="Add Category Failed!")
+
+    def test_view_category(self):
+        tester = app.test_client(self)
+        self.signup()
+        self.login()
+        self.add_category()
+        response = tester.get('/edit_category/0', content_type='html/text')
+        self.assertIn(b'Breakfast', response.data, msg='Could not view category')
+
+
+    def test_update_category(self):
+        tester = app.test_client(self)
+        self.signup()
+        self.login()
+        self.add_category()
+        response = tester.post('/edit_category/0', data=dict(title="Lunch", description="Breakfast is awesome"), follow_redirects=True)
+        self.assertIn(b'Lunch', response.data, msg='Could not update category')
+
+    def test_delete_category(self):
+        tester = app.test_client(self)
+        self.signup()
+        self.login()
+        self.add_category()
+        response = tester.get('/category/0', content_type='html/text', follow_redirects=True)        
+        self.assertIn(b'Breakfast', response.data, msg='Could not delete category')
 
 
 if __name__ == '__main__':
