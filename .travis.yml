@@ -10,8 +10,9 @@ install:
   - pip install -r requirements.txt  
 
 script:
-  - python tests.py
+  - coverage run --include="views, app, user" tests.py
   - coverage run tests.py
+  - coverage report
 
 # blacklist  
 branches:
