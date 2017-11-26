@@ -1,12 +1,11 @@
 from flask import render_template, redirect, url_for, request, session, flash, json
-from app import app, recipe, category, user
+from app import app, user
 import re
 from functools import wraps
 import uuid
 
 Recipe = user.Recipe
 User = user.User
-Lecipe = user.Recipe
 Category = user.Category
 
 user_list = []
@@ -216,7 +215,7 @@ def edit(id):
 def view(id):
     session['show'] = True
     recipe_item = current_person['recipes'][id]
-    
+
     return render_template("view.html", recipe = recipe_item)
     
         

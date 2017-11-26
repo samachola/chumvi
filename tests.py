@@ -4,17 +4,40 @@ import flask_testing
 
 User = user.User
 
-class FlaskTestCase(unittest.TestCase):
+class TestJikoni(unittest.TestCase):
     
     def setUp(self):
+        self.user_list = []
         self.new_user = User('sam achola', 'sam.achola@live.com', '123')
         self.current_person = dict(email=self.new_user.email, categories=self.new_user.categories, recipes=self.new_user.recipes)
-        self.user_list = []
+        self.user_list.append(self.new_user)
 
 
     def tearDown(self):
         pass
     
+    def signup(self):
+        """Signup helper method"""
+        tester = app.test_client(self)
+        return tester.post('/register', data=dict(name='Sam Achola', email='sam.achola@live.com', password='123'), follow_redirects=True)
+        # self.new_user = User('sam achola', 'sam.achola@live.com', '123')
+        # self.user_list.append(self.new_user)
+        # return self.user_list
+
+    def login(self):
+        """Login helper method"""
+        tester = app.test_client(self)
+        return tester.post('/login', data=dict(email='sam.achola@live.com', password='123', follow_redirects=True)) 
+    def add_category(self):
+        """Add Category Helper Method"""
+        tester = app.test_client(self)
+        return tester.post('/category', data=dict(title="Breakfast", description="Breakfast is awesome"))
+
+    def add_recipe(self):
+        """Add recipe helper method"""
+        tester = app.test_client(self)
+        return tester.post('/addrecipe', data=dict(title='Githeri', category='Breakfast', ingredients='Maize, Beans', process='Just boil and add salt. Enjoy!'), follow_redirects=True)
+
     # Ensures that flask is correctly setup
     def test_index(self):
         tester = app.test_client(self)
@@ -49,22 +72,72 @@ class FlaskTestCase(unittest.TestCase):
 
     def test_login_unexisting(self):
         tester = app.test_client(self)
-        response = tester.post('/login', data=dict(email='sam@live.com', password='123'), follow_redirects=True)
-        self.assertIn(b'User not available! Please register', response.data, msg="Login Failed")
+        response = tester.post('/login', data=dict(email='sam.acho@live.com', password='123'), follow_redirects=True)
+        self.assertIn(b'Username and Password incorrect', response.data, msg="Login Failed")
 
-    # def test_login(self):
-    #     tester = app.test_client(self)
-    #     self.new_user = User('Sam Achola', 'sam.achola@live.com', '123')
-    #     self.user_list.append(self.new_user)
-    #     response = tester.post('/login', data=dict(email='sam.achola@live.com', password='123'), follow_redirects=True)
-    #     self.assertIn(b'Add Recipe', response.data, msg="Could not login")
+   
+    def test_view_categories_unprotected(self):
+        tester = app.test_client(self)
+        response = tester.get('/category', follow_redirects=True)
+        self.assertIn(b'Login', response.data, msg="Category route not protected")
+
+    def test_edit_category_unprotected(self):
+        tester = app.test_client(self)
+        response = tester.get('/edit_category/0', follow_redirects=True)
+        self.assertIn(b'Login', response.data, msg="Category route not protected")
+
+    def test_view_recipe_unprotected(self):
+        tester = app.test_client(self)
+        response = tester.get('/recipes', follow_redirects=True)
+        self.assertIn(b'Login', response.data, msg="Category route not protected")
+
+    def test_edit_recipe_unprotected(self):
+        tester = app.test_client(self)
+        response = tester.get('/edit/0', follow_redirects=True)
+        self.assertIn(b'Login', response.data, msg="Category route not protected")
+
+    def test_login(self):
+        tester = app.test_client(self)
+        self.signup()
+        response = tester.post('/login', data=dict(email='sam.achola@live.com', password='123'), follow_redirects=True)
+        self.assertIn(b'Recipes', response.data, msg="Could not login")
         
 
 
-    # def test_add_recipe(self):
-    #     tester = app.test_client(self)
-    #     response = tester.post('/addrecipe', data=dict(title='Githeri', category='breakfast', ingredients='Maize, Beans', process='Just boil and add salt. Enjoy!'), follow_redirects=True)
-    #     self.assertIn(b'My recipes', response.data, msg="recipe add function not working")
+    def test_add_recipe(self):
+        tester = app.test_client(self)
+        self.signup()
+        self.login()
+        self.add_category()
+        response = tester.post('/addrecipe', data=dict(title='Githeri', category='Breakfast', ingredients='Maize, Beans', process='Just boil and add salt. Enjoy!'), follow_redirects=True)
+        self.assertIn(b'Githeri', response.data, msg="recipe add function not working")
+    
+    def test_view_recipe(self):
+        tester = app.test_client(self)
+        self.signup()
+        self.login()
+        self.add_category()
+        self.add_recipe()
+        response = tester.get('/recipes', content_type='html/text')
+        self.assertIn(b'Githeri', response.data, msg="No recipes found")
+
+    def test_view_single_recipe(self):
+        tester = app.test_client(self)
+        self.signup()
+        self.login()
+        self.add_category()
+        self.add_recipe()
+        response = tester.get('/view/0', content_type='html/text')
+        self.assertIn(b'Maize, Beans', response.data, msg='Could not view single recipe')
+
+    def test_delete_recipe(self):
+        tester = app.test_client(self)
+        self.signup()
+        self.login()
+        self.add_category()
+        self.add_recipe()
+        response = tester.get('/delete/0', follow_redirects=True)
+        self.assertIn(b'My Recipes', response.data, msg='could not deleter recipe')
 
     # def test_add_category(self):
     #     self.test_registration_params()
