@@ -171,16 +171,16 @@ def add_recipe():
         error = None
         if request.form['title'].isspace() or request.form['title'] == '':
             error = "Recipe title cannot be empty"
-            return render_teplate('add.html', error = error)
+            return render_template('add.html', error = error)
         if not request.form['category'] or request.form['category'].isspace() or request.form['category'] == '':
             error = "Recipe category cannot be empty"
-            return render_teplate('add.html', error = error)
+            return render_template('add.html', error = error)
         if request.form['ingredients'].isspace() or request.form['ingredients'] == '':
             error = "Recipe ingredients cannot be empty"
-            return render_teplate('add.html', error = error)
+            return render_template('add.html', error = error)
         if request.form['process'].isspace() or request.form['process'] == '':
             error = "How are we going to cook that! Add some process priss!!"
-            return render_teplate('add.html', error = error)
+            return render_template('add.html', error = error)
 
         new_recipe = Recipe(request.form['title'], request.form['category'], request.form['ingredients'], request.form['process'])
         if new_recipe:

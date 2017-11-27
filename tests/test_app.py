@@ -54,6 +54,11 @@ class TestJikoni(unittest.TestCase):
         response = tester.post('/register', data=dict(name='sam', email='not valid email', password='123'))
         self.assertIn(b'Email provided is not valid', response.data, msg="Check Valid Email Failed")
 
+    def test_registration_password(self):
+        tester = app.test_client(self)
+        response = tester.post('/register', data=dict(name='sam', email='sam.achola@live.com', password=''))
+        self.assertIn(b'Password is required', response.data, msg="Password shouldn't be empty")
+
 
     def test_registration_params(self):
         tester = app.test_client(self)
@@ -74,6 +79,15 @@ class TestJikoni(unittest.TestCase):
         tester = app.test_client(self)
         response = tester.post('/login', data=dict(email='sam.acho@live.com', password='123'), follow_redirects=True)
         self.assertIn(b'Username and Password incorrect', response.data, msg="Login Failed")
+
+
+    def test_logout(self):
+        tester = app.test_client(self)
+        self.signup()
+        self.login()
+        response = tester.get('/logout', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+
 
    
     def test_view_categories_unprotected(self):
@@ -103,6 +117,13 @@ class TestJikoni(unittest.TestCase):
         self.assertIn(b'Recipes', response.data, msg="Could not login")
         
 
+    def test_add_recipe_loads(self):
+        tester = app.test_client(self)
+        self.signup()
+        self.login()
+        self.add_category()
+        response = tester.get('/addrecipe', content_type='html/text')
+        self.assertIn(b'Breakfast', response.data, msg="Add recipe page not functioning")
 
     def test_add_recipe(self):
         tester = app.test_client(self)
@@ -111,6 +132,39 @@ class TestJikoni(unittest.TestCase):
         self.add_category()
         response = tester.post('/addrecipe', data=dict(title='Githeri', category='Breakfast', ingredients='Maize, Beans', process='Just boil and add salt. Enjoy!'), follow_redirects=True)
         self.assertIn(b'Githeri', response.data, msg="recipe add function not working")
+
+
+    def test_add_recipe_title(self):
+        tester = app.test_client(self)
+        self.signup()
+        self.login()
+        self.add_category()
+        response = tester.post('/addrecipe', data=dict(title='', category='Breakfast', ingredients='Maize, Beans', process='Just boil and add salt. Enjoy!'), follow_redirects=True)
+        self.assertIn(b'Recipe title cannot be empty', response.data, msg="Should not add empty recipe title")
+
+    def test_add_recipe_category(self):
+        tester = app.test_client(self)
+        self.signup()
+        self.login()
+        self.add_category()
+        response = tester.post('/addrecipe', data=dict(title='Githeri', category='', ingredients='Maize, Beans', process='Just boil and add salt. Enjoy!'), follow_redirects=True)
+        self.assertIn(b'Recipe category cannot be empty', response.data, msg="Should not add empty recipe category")
+
+    def test_add_recipe_ingredients(self):
+        tester = app.test_client(self)
+        self.signup()
+        self.login()
+        self.add_category()
+        response = tester.post('/addrecipe', data=dict(title='Githeri', category='Breakfast', ingredients='', process='Just boil and add salt. Enjoy!'), follow_redirects=True)
+        self.assertIn(b'Recipe ingredients cannot be empty', response.data, msg="Should not add empty recipe ingredients")
+
+    def test_add_recipe_process(self):
+        tester = app.test_client(self)
+        self.signup()
+        self.login()
+        self.add_category()
+        response = tester.post('/addrecipe', data=dict(title='Githeri', category='Breakfast', ingredients='Maize, Beans', process=''), follow_redirects=True)
+        self.assertIn(b'How are we going to cook that! Add some process priss!!', response.data, msg="Should not add empty recipe process")
     
     def test_view_recipe(self):
         tester = app.test_client(self)

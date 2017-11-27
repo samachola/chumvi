@@ -9,26 +9,6 @@ class User():
         self.categories = []
         self.recipes = []
 
-    def addCategory(self, title, description):
-        category_dict = {}
-        category_dict['title'] = title
-        category_dict['description'] = description
-        self.categories.append(category_dict)
-        return {'status': True, 'msg': "Category added successfully"}
-
-    def removeCategory(self, title):
-        self.categories.pop(title)
-        return {'status': True}
-    def addRecipe(self, name, category, ingredients, process):
-        
-        recipe = {}
-        recipe['name'] = name
-        recipe['category'] = category
-        recipe['ingredients'] = ingredients
-        recipe['process'] = process
-
-        self.recipes.append(recipe)
-        return {'status': True}
 
         
 class Category():
